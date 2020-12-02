@@ -1,0 +1,98 @@
+
+<h5>Fund Transfer</h5>
+<hr />
+
+<form [formGroup]="tranferForm" #formDir="ngForm">
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Mobile No</label>
+    <div class="col-md-4">
+      <input type="radio" class="radio" checked>  {{mobileno}}
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Transfer From</label>
+    <div class="col-md-4">
+      <select class="form-control" formControlName="ddlwalletId" id="#">
+        <!--<option value="two" selected>Select Wallet Id</option>-->
+        <option value="" disabled selected hidden>Select beneficiary name</option>
+        <option value={{walletId}}>{{walletId}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class=" control-label col-md-12">Transfer to</label>
+    <div class="col-md-4">
+      <input class="form-control" type="number" placeholder="Mobile" formControlName="Transferto" (change)="checkproject($event)">
+    </div>
+    <div *ngIf="tranferForm.get('Transferto').invalid && (tranferForm.get('Transferto').dirty || tranferForm.get('Transferto').touched)"
+         class="alert alert-danger">
+      <div *ngIf="tranferForm.get('Transferto').errors.required">
+        Transfer to is required.
+      </div>
+      <div *ngIf="tranferForm.get('Transferto').errors.pattern">
+        Enter 10 digit Mobile Number.
+      </div>
+    </div>
+    <div *ngIf="mobileValidated == mobileValidate"  class="alert alert-danger">
+      Invalid Mobile Number.
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="Walletname">To Beneficiary Name</label>
+    <div class="col-md-4">
+      <input class="form-control"  type="text" value={{transfername}} disabled>
+    </div>
+    <!--<div *ngIf="tranferForm.get('Walletname').invalid && (tranferForm.get('Walletname').dirty || tranferForm.get('Walletname').touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="tranferForm.get('Walletname').errors.required">
+        Wallet Name is required.
+      </div>
+    </div>-->
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="Amount">Amount</label>
+    <div class="col-md-4">
+      <input class="form-control" type="number" autocomplete="off" value="{{zeroamount}}" formControlName="Amount" min="0" (keyup)="onKey($event)"  (change)="_keyPress($event)" oninput="this.value = Math.abs(this.value)">
+    </div>
+    <div *ngIf="tranferForm.get('Amount').invalid && (tranferForm.get('Amount').dirty || tranferForm.get('Amount').touched)"
+         class="alert alert-danger">
+      <div *ngIf="tranferForm.get('Amount').errors.required">
+        Amount is required.
+      </div>
+    </div>
+    <div *ngIf="amountValidate == amountValidation" class="alert alert-danger">
+      Amount is zero.
+    </div>
+
+  </div>
+
+    <div class="form-group row">
+      <label class="control-label col-md-12" for="Remarks">Remarks</label>
+      <div class="col-md-4">
+        <input class="form-control" type="text" autocomplete="off" formControlName="Remarks">
+      </div>
+      <div *ngIf="tranferForm.get('Remarks').invalid && (tranferForm.get('Remarks').dirty || tranferForm.get('Remarks').touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="tranferForm.get('Remarks').errors.required">
+          Remarks is required.
+        </div>
+      </div>
+    </div>
+
+    <hr />
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" (click)="save()">Submit</button>
+      <button class="btn btn-danger" style="position: relative;left: 20px;" (click)="cancel()">Cancel</button>
+    </div>
+</form>
+
+
+
